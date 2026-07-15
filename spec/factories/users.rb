@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :user do
-    discord_user_name { "MyString" }
-    discord_user_id { "MyString" }
-    avatar_url { "MyString" }
-    default_visibility { 1 }
+    discord_user_name { "tyrrell" }
+    discord_user_id { "123456789012345678" }
+    avatar_url { "https://example.com/avatar.png" }
+    default_visibility { :public }
   end
 end
