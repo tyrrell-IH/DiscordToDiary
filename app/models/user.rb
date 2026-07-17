@@ -1,3 +1,3 @@
 class User < ApplicationRecord
-  enum :default_visibility, { public: 0, members_only: 1, private: 2 }
+  enum :default_visibility, { unconfigured: 0, everyone: 1, members_only: 2, only_me: 3 }
 end
