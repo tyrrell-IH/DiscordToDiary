@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :user do
-    discord_user_name { "tyrrell" }
-    discord_user_id { "123456789012345678" }
+    sequence(:discord_user_name) { |n| "user#{n}" }
+    sequence(:discord_user_id) { |n| "123456789012345678#{n}" }
     avatar_url { "https://example.com/avatar.png" }
     default_visibility { :everyone }
   end
