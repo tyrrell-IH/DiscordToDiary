@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_20_134543) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_22_054551) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -24,6 +24,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_20_134543) do
     t.index ["user_id"], name: "index_diaries_on_user_id"
   end
 
+  create_table "diary_entries", force: :cascade do |t|
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.bigint "diary_id", null: false
+    t.string "discord_message_id", null: false
+    t.datetime "posted_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["diary_id"], name: "index_diary_entries_on_diary_id"
+    t.index ["discord_message_id"], name: "index_diary_entries_on_discord_message_id", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "avatar_url"
     t.datetime "created_at", null: false
@@ -35,4 +46,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_20_134543) do
   end
 
   add_foreign_key "diaries", "users"
+  add_foreign_key "diary_entries", "diaries"
 end

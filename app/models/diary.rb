@@ -1,5 +1,6 @@
 class Diary < ApplicationRecord
   belongs_to :user
+  has_many :diary_entries, dependent: :destroy
 
   enum :visibility, { everyone: 0, members_only: 1, only_me: 2 }
 
