@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe DiaryEntry, type: :model do
+  it "destroys associated diary_attachment when the diary_entry is destroyed" do
+    diary_entry = FactoryBot.create(:diary_entry)
+    diary_attachment = FactoryBot.create(:diary_attachment, diary_entry:)
+
+    diary_entry.destroy
+
+    expect(DiaryAttachment.exists?(diary_attachment.id)).to be false
+  end
+
   it "is invalid without a posted_at" do
     diary_entry = FactoryBot.build(:diary_entry, posted_at: nil)
 

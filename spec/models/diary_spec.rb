@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Diary, type: :model do
+  it "destroys associated diary_entries when the diary is destroyed" do
+    diary = FactoryBot.create(:diary)
+    diary_entry = FactoryBot.create(:diary_entry, diary:)
+
+    diary.destroy
+
+    expect(DiaryEntry.exists?(diary_entry.id)).to be false
+  end
+
   it "is invalid without a date" do
     diary = FactoryBot.build(:diary, date: nil)
 

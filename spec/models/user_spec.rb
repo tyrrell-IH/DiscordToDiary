@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  it "destroys associated diaries when the user is destroyed" do
+    user = FactoryBot.create(:user)
+    diary = FactoryBot.create(:diary, user:)
+
+    user.destroy
+
+    expect(Diary.exists?(diary.id)).to be false
+  end
+
   it "is invalid without a discord_user_name" do
     user = FactoryBot.build(:user, discord_user_name: nil)
 
