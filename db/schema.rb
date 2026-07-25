@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_22_054551) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_24_151138) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_054551) do
     t.integer "visibility", default: 2, null: false
     t.index ["user_id", "date"], name: "index_diaries_on_user_id_and_date", unique: true
     t.index ["user_id"], name: "index_diaries_on_user_id"
+  end
+
+  create_table "diary_attachments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "diary_entry_id", null: false
+    t.string "discord_attachment_id", null: false
+    t.integer "position", null: false
+    t.datetime "updated_at", null: false
+    t.index ["diary_entry_id", "position"], name: "index_diary_attachments_on_diary_entry_id_and_position", unique: true
+    t.index ["diary_entry_id"], name: "index_diary_attachments_on_diary_entry_id"
+    t.index ["discord_attachment_id"], name: "index_diary_attachments_on_discord_attachment_id", unique: true
   end
 
   create_table "diary_entries", force: :cascade do |t|
@@ -46,5 +57,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_054551) do
   end
 
   add_foreign_key "diaries", "users"
+  add_foreign_key "diary_attachments", "diary_entries"
   add_foreign_key "diary_entries", "diaries"
 end
