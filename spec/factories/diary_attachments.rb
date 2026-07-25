@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :diary_attachment do
-    diary_entry { nil }
-    position { 1 }
-    discord_attachment_id { "MyString" }
+    association :diary_entry
+    position { 0 }
+    sequence(:discord_attachment_id) { |n| "123456789012345678#{n}" }
   end
 end
