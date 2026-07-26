@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_24_151138) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_26_152140) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -44,6 +44,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_24_151138) do
     t.datetime "updated_at", null: false
     t.index ["diary_id"], name: "index_diary_entries_on_diary_id"
     t.index ["discord_message_id"], name: "index_diary_entries_on_discord_message_id", unique: true
+  end
+
+  create_table "discord_sync_states", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "last_discord_message_id"
+    t.string "singleton_key", null: false
+    t.datetime "synced_at"
+    t.datetime "updated_at", null: false
+    t.index ["singleton_key"], name: "index_discord_sync_states_on_singleton_key", unique: true
   end
 
   create_table "users", force: :cascade do |t|
