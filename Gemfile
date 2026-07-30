@@ -61,3 +61,5 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
+
+gem "ruby-vips", "~> 2.3", require: false
