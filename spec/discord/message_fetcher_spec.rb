@@ -23,6 +23,10 @@ RSpec.describe MessageFetcher do
     expect(channel).to receive(:history).with(3, 3, nil).ordered.and_return(older_messages)
     expect(channel).to receive(:history).with(3, 1, nil).ordered.and_return([])
 
+    allow(Rails.application.credentials).to receive(:fetch)
+                                              .with(:discord)
+                                              .and_return({ bot_token: "test-token", channel_id: 123 })
+
     described_class.new.call(fetch_limit: 3)
   end
 end
