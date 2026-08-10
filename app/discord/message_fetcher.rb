@@ -15,12 +15,19 @@ class MessageFetcher
 
     all_messages = []
     before_id = nil
+    checkpoint = @last_discord_message_id&.to_i
 
     loop do
-      messages = channel.history(fetch_limit, before_id, @last_discord_message_id&.to_i)
+      messages = channel.history(fetch_limit, before_id)
       break if messages.empty?
 
-      all_messages.concat(messages)
+      if checkpoint
+        all_messages.concat(messages.select { |message| message.id > checkpoint })
+        break if messages.any? { |message| message.id <= checkpoint }
+      else
+        all_messages.concat(messages)
+      end
+
       before_id = messages.last.id
     end
 
