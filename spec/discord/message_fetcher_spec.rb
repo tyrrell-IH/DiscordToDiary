@@ -27,6 +27,7 @@ RSpec.describe MessageFetcher do
                                               .with(:discord)
                                               .and_return({ bot_token: "test-token", channel_id: 123 })
 
-    described_class.new.call(fetch_limit: 3)
+    result = described_class.new.call(fetch_limit: 3)
+    expect(result).to eq(newer_messages + older_messages)
   end
 end
