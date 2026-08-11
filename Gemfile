@@ -63,3 +63,5 @@ group :development do
 end
 
 gem "ruby-vips", "~> 2.3", require: false
+
+gem "discordrb", "~> 3.8", require: false
