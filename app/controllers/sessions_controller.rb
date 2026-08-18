@@ -1,0 +1,26 @@
+class SessionsController < ApplicationController
+  def new
+  end
+
+  def destroy
+  end
+
+  def create
+    auth_info = request.env.fetch("omniauth.auth")
+    user = User.sync_with_discord(auth_info)
+
+    reset_session
+    log_in(user)
+
+    redirect_to user_diaries_path(user), notice: "ログインしました"
+  end
+
+  def failure
+  end
+
+  private
+
+  def log_in(user)
+    session[:user_id] = user.id
+  end
+end
