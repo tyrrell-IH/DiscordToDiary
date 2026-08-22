@@ -3,6 +3,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    reset_session
+    @current_user = nil
+    redirect_to login_path, notice: "ログアウトしました"
   end
 
   def create
