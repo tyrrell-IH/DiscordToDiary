@@ -19,6 +19,7 @@ class SessionsController < ApplicationController
   end
 
   def failure
+    redirect_to login_path, notice: "Discordログインが完了できませんでした"
   end
 
   private
