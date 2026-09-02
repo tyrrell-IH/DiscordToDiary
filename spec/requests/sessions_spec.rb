@@ -12,7 +12,7 @@ RSpec.describe "Sessions", type: :request do
     it "redirects to /login" do
       get auth_failure_path
       expect(response).to redirect_to(login_path)
-      expect(flash[:notice]).to eq("Discordログインが完了できませんでした")
+      expect(flash[:notice]).to eq("Discordログインを完了できませんでした")
     end
   end
 
