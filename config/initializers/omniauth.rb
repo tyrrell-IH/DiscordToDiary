@@ -1,4 +1,11 @@
-discord_credentials = Rails.application.credentials.fetch(:discord)
+discord_credentials =
+  if Rails.env.test?
+    {
+      client_id: "test_client_id", client_secret: "test_client_secret"
+    }
+  else
+    Rails.application.credentials.fetch(:discord)
+  end
 
 OmniAuth.config.on_failure = Proc.new { |env|
   OmniAuth::FailureEndpoint.new(env).redirect_to_failure
