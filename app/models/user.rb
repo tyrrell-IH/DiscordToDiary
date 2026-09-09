@@ -6,4 +6,13 @@ class User < ApplicationRecord
   validates :discord_user_name, presence: true
   validates :discord_user_id, presence: true, uniqueness: true
   validates :default_visibility, presence: true
+
+  def self.sync_with_discord(auth_info)
+    user = User.find_or_initialize_by(discord_user_id: auth_info.uid)
+    user.update!(
+      discord_user_name: auth_info.info.name,
+      avatar_url: auth_info.info.image
+    )
+    user
+  end
 end

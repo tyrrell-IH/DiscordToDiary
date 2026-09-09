@@ -1,0 +1,7 @@
+<header>
+  <% if current_user %>
+    <p>ログイン中: <%= current_user.discord_user_name %></p>
+
+    <%= button_to "ログアウト", logout_path, method: :delete %>
+<% end %>
+</header>
