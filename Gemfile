@@ -62,6 +62,12 @@ group :development do
   gem "web-console"
 end
 
+group :test do
+  gem "capybara", "~> 3.40"
+
+  gem "selenium-webdriver", "~> 4.48"
+end
+
 gem "ruby-vips", "~> 2.3", require: false
 
 gem "discordrb", "~> 3.8", require: false
