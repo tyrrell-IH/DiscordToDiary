@@ -39,6 +39,24 @@ RSpec.describe MessageImporter do
           described_class.new(message).call
         }.to_not change { [ Diary.count, DiaryEntry.count ] }
       end
+
+      context "when creating the diary entry fails" do
+        let(:invalid_message) do
+          instance_double(Discordrb::Message,
+                          author: author,
+                          timestamp: Time.utc(2026, 1, 1, 1, 0, 0),
+                          id: nil,
+                          content: "test")
+        end
+
+        it "rolls back the diary creation" do
+          expect {
+            described_class.new(invalid_message).call
+          }.to raise_error(ActiveRecord::RecordInvalid)
+                 .and change(Diary, :count).by(0)
+                                            .and change(DiaryEntry, :count).by(0)
+        end
+      end
     end
 
     context "when the message author is not registered" do
