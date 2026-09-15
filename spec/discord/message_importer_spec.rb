@@ -7,7 +7,7 @@ RSpec.describe MessageImporter do
     let(:message) do
       instance_double(Discordrb::Message,
                       author: author,
-                      timestamp: Time.utc(2026, 1, 1, 1, 0, 0),
+                      timestamp: Time.utc(2026, 1, 1, 16, 0, 0),
                       id: 678910,
                       content: "test")
     end
@@ -19,7 +19,7 @@ RSpec.describe MessageImporter do
           discord_user_id: author.id.to_s)
       end
 
-      it "creates a diary entry from the message" do
+      it "creates a diary and a diary entry" do
         expect {
           described_class.new(message).call
         }.to change(Diary, :count).by(1)
@@ -30,6 +30,13 @@ RSpec.describe MessageImporter do
                            content: message.content,
                            posted_at: message.timestamp
                          )
+      end
+
+      it "uses the Tokyo time zone to determine the diary date" do
+        described_class.new(message).call
+        diary = DiaryEntry.find_by!(discord_message_id: message.id).diary
+
+        expect(diary.date).to eq(Date.new(2026, 1, 2))
       end
 
       it "does not import the same message twice" do
