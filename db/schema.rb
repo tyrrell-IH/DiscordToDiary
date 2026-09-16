@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_27_082245) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_16_121532) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,7 +50,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_27_082245) do
     t.datetime "created_at", null: false
     t.string "last_discord_message_id"
     t.string "singleton_key", null: false
-    t.datetime "synced_at"
     t.datetime "updated_at", null: false
     t.index ["singleton_key"], name: "index_discord_sync_states_on_singleton_key", unique: true
     t.check_constraint "singleton_key::text = 'discord_sync_state'::text", name: "discord_sync_states_singleton_key_check"
