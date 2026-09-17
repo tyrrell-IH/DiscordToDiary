@@ -31,6 +31,6 @@ class MessageFetcher
       before_id = messages.last.id
     end
 
-    all_messages
+    all_messages.uniq(&:id)
   end
 end
