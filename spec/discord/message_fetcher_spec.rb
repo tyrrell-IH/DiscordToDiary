@@ -16,6 +16,13 @@ RSpec.describe MessageFetcher do
       instance_double(Discordrb::Message, id: 1)
     ]
   end
+  let(:messages_containing_duplicates) do
+    [
+      instance_double(Discordrb::Message, id: 7),
+      instance_double(Discordrb::Message, id: 6),
+      instance_double(Discordrb::Message, id: 6)
+    ]
+  end
 
   before do
     allow(Discordrb::Bot).to receive(:new).and_return(bot)
@@ -49,6 +56,13 @@ RSpec.describe MessageFetcher do
         result = described_class.new(last_discord_message_id:).call(fetch_limit: 3)
         expect(result.map(&:id)).to eq([ 5, 4, 3, 2 ])
       end
+    end
+
+    it "removes duplicate messages" do
+      allow(channel).to receive(:history).and_return(messages_containing_duplicates, [])
+
+      result = described_class.new.call
+      expect(result.map(&:id)).to eq([ 7, 6 ])
     end
   end
 end

@@ -17,7 +17,7 @@ RSpec.describe ImportMessages do
                     id: 2,
                     content: "2回目の投稿")
   end
-  let(:messages) { [ older_message, newer_message ] }
+  let(:messages) { [ newer_message, older_message ] }
   let(:fetcher) { instance_double(MessageFetcher, call: messages) }
 
   before do
@@ -28,10 +28,41 @@ RSpec.describe ImportMessages do
       discord_user_id: author.id.to_s)
   end
 
-  it "fetches messages and imports them into the database" do
+  it "imports messages and updates the last Discord message ID" do
     expect {
       described_class.new.call
     }.to change(Diary, :count).by(1)
                               .and change(DiaryEntry, :count).by(2)
+
+    sync_state = DiscordSyncState.find_by!(singleton_key: DiscordSyncState::SINGLETON_KEY)
+    expect(sync_state.last_discord_message_id).to eq("2")
+  end
+
+  context "when updating the last Discord message ID fails" do
+    let(:sync_state) do
+      FactoryBot.create(:discord_sync_state, last_discord_message_id: nil)
+    end
+
+    before do
+      allow(DiscordSyncState)
+        .to receive(:find_or_create_by!)
+              .with(singleton_key: DiscordSyncState::SINGLETON_KEY)
+              .and_return(sync_state)
+
+      allow(sync_state)
+        .to receive(:update!)
+              .with(last_discord_message_id: older_message.id)
+              .and_raise(ActiveRecord::RecordInvalid.new(sync_state))
+    end
+
+    it "rolls back the diary and diary entry creation" do
+      expect {
+        described_class.new.call
+      }.to raise_error(ActiveRecord::RecordInvalid)
+             .and change(Diary, :count).by(0)
+                                        .and change(DiaryEntry, :count).by(0)
+
+      expect(sync_state.reload.last_discord_message_id).to be_nil
+    end
   end
 end
