@@ -26,10 +26,9 @@ RSpec.describe "Login and logout", type: :system do
     visit login_path
     click_button "ログインする"
 
-    user = User.find_by!(discord_user_id: auth_info.uid)
-
-    expect(page).to have_current_path(user_diaries_path(user))
     expect(page).to have_content(auth_info.info.name)
+    user = User.find_by!(discord_user_id: auth_info.uid)
+    expect(page).to have_current_path(user_diaries_path(user))
 
     click_button "ログアウト"
 
