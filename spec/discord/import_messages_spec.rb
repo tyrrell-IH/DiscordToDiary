@@ -3,25 +3,40 @@ require 'discordrb'
 
 RSpec.describe ImportMessages do
   let(:author) { instance_double(Discordrb::Member, id: 12345) }
+  let(:attachment) { instance_double(
+    Discordrb::Attachment,
+    id: 12345,
+    url: "https://sample/attachments/abcd1234",
+    filename: "sample.jpeg",
+    content_type: "image/jpeg"
+  ) }
   let(:older_message) do
-    instance_double(Discordrb::Message,
-                    author: author,
-                    timestamp: Time.utc(2026, 1, 1, 1, 0, 0),
-                    id: 1,
-                    content: "1回目の投稿")
+    instance_double(
+      Discordrb::Message,
+      author: author,
+      timestamp: Time.utc(2026, 1, 1, 1, 0, 0),
+      id: 1,
+      content: "1回目の投稿",
+      attachments: [ attachment ]
+    )
   end
   let(:newer_message) do
-    instance_double(Discordrb::Message,
-                    author: author,
-                    timestamp: Time.utc(2026, 1, 1, 2, 0, 0),
-                    id: 2,
-                    content: "2回目の投稿")
+    instance_double(
+      Discordrb::Message,
+      author: author,
+      timestamp: Time.utc(2026, 1, 1, 2, 0, 0),
+      id: 2,
+      content: "2回目の投稿",
+      attachments: []
+    )
   end
   let(:messages) { [ newer_message, older_message ] }
   let(:fetcher) { instance_double(MessageFetcher, call: messages) }
+  let(:file) { instance_double(IO, read: "dummy") }
 
   before do
     allow(MessageFetcher).to receive(:new).and_return(fetcher)
+    allow(URI).to receive(:open).with(attachment.url).and_yield(file)
 
     FactoryBot.create(
       :user,
@@ -60,7 +75,7 @@ RSpec.describe ImportMessages do
         described_class.new.call
       }.to raise_error(ActiveRecord::RecordInvalid)
              .and change(Diary, :count).by(0)
-                                        .and change(DiaryEntry, :count).by(0)
+                                       .and change(DiaryEntry, :count).by(0)
 
       expect(sync_state.reload.last_discord_message_id).to be_nil
     end

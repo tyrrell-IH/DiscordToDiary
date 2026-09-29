@@ -1,4 +1,6 @@
 class DiaryAttachment < ApplicationRecord
+  has_one_attached :file
+
   belongs_to :diary_entry
 
   validates :position,
