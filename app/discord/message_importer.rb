@@ -34,11 +34,13 @@ class MessageImporter
       image_data = URI.open(attachment.url) { |file| file.read }
       image_io = StringIO.new(image_data)
 
-      diary_attachment.file.attach(
+      blob = ActiveStorage::Blob.create_and_upload!(
         io: image_io,
         filename: attachment.filename,
         content_type: attachment.content_type
       )
+
+      diary_attachment.file.attach(blob)
     end
   end
 end

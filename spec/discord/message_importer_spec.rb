@@ -64,21 +64,18 @@ RSpec.describe MessageImporter do
         }.to_not change { [ Diary.count, DiaryEntry.count ] }
       end
 
-      context "when creating the diary entry fails" do
-        let(:invalid_message) do
-          instance_double(Discordrb::Message,
-                          author: author,
-                          timestamp: Time.utc(2026, 1, 1, 1, 0, 0),
-                          id: nil,
-                          content: "test")
+      context "when uploading an attachment fails" do
+        before do
+          allow(ActiveStorage::Blob).to receive(:create_and_upload!).and_raise(StandardError)
         end
 
-        it "rolls back the diary creation" do
+        it "rolls back the diary and the diary entry creation" do
           expect {
-            described_class.new(invalid_message).call
-          }.to raise_error(ActiveRecord::RecordInvalid)
+            described_class.new(message).call
+          }.to raise_error(StandardError)
                  .and change(Diary, :count).by(0)
                                            .and change(DiaryEntry, :count).by(0)
+                                                                          .and change(DiaryAttachment, :count).by(0)
         end
       end
     end
