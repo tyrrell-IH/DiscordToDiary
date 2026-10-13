@@ -94,6 +94,34 @@ RSpec.describe MessageImporter do
       expect(pairs.last[:blob].filename).to eq(attachment2.filename)
       expect(pairs.last[:blob].download).to eq("dummy2")
     end
+
+    context "when downloading the second attachment fails" do
+      let!(:uploaded_blob) do
+        ActiveStorage::Blob.create_and_upload!(
+          io: StringIO.new("dummy1"),
+          filename: attachment1.filename,
+          content_type: attachment1.content_type
+        )
+      end
+
+      before do
+        allow(URI).to receive(:open).with(attachment2.url).and_raise(StandardError, "The second attachment failed")
+        allow(ActiveStorage::Blob).to receive(:create_and_upload!).and_return(uploaded_blob)
+      end
+
+      it "deletes the previously uploaded blob and file" do
+        blob_id = uploaded_blob.id
+        service = uploaded_blob.service
+        key = uploaded_blob.key
+
+        expect {
+          importer.upload_attachments
+        }.to raise_error(StandardError, "The second attachment failed")
+
+        expect(ActiveStorage::Blob.exists?(blob_id)).to be false
+        expect(service.exist?(key)).to be false
+      end
+    end
   end
 
   describe "#imported?" do

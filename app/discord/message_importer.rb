@@ -28,15 +28,24 @@ class MessageImporter
   end
 
   def upload_attachments
+    blobs = []
     @message.attachments.map do |attachment|
-      image_data = URI.open(attachment.url) { |file| file.read }
-      image_io = StringIO.new(image_data)
+      begin
+        image_data = URI.open(attachment.url) { |file| file.read }
+        image_io = StringIO.new(image_data)
 
-      blob = ActiveStorage::Blob.create_and_upload!(
-        io: image_io,
-        filename: attachment.filename,
-        content_type: attachment.content_type
-      )
+        blob = ActiveStorage::Blob.create_and_upload!(
+          io: image_io,
+          filename: attachment.filename,
+          content_type: attachment.content_type
+        )
+
+      rescue StandardError
+        blobs.each(&:purge)
+        raise
+      end
+
+      blobs << blob
 
       { attachment: attachment, blob: blob }
     end
