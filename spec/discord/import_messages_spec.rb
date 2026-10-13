@@ -154,6 +154,13 @@ RSpec.describe ImportMessages do
           service = blob.service
           key = blob.key
 
+          expect(Rails.logger).to receive(:error).with(
+            a_string_including(
+              "message_id=#{older_message.id} ",
+              "StandardError: Import Fails"
+            )
+          )
+
           expect {
             described_class.new.call
           }.to raise_error(StandardError, "Import Fails")
@@ -183,6 +190,13 @@ RSpec.describe ImportMessages do
           blob_id = blob.id
           service = blob.service
           key = blob.key
+
+          expect(Rails.logger).to receive(:error).with(
+            a_string_including(
+              "message_id=#{older_message.id} ",
+              "StandardError: Update Sync State Fails"
+            )
+          )
 
           expect {
             described_class.new.call
