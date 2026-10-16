@@ -33,7 +33,7 @@ RSpec.describe ImportMessages do
   end
   let(:messages) { [ newer_message, older_message ] }
   let(:fetcher) { instance_double(MessageFetcher, call: messages) }
-  let(:file) { instance_double(IO, read: "dummy") }
+  let(:file) { StringIO.new("dummy") }
 
   before do
     allow(MessageFetcher).to receive(:new).and_return(fetcher)

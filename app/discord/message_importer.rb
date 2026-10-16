@@ -1,5 +1,4 @@
 require "open-uri"
-require "stringio"
 
 class MessageImporter
   def initialize(message)
@@ -31,14 +30,13 @@ class MessageImporter
     blobs = []
     @message.attachments.map do |attachment|
       begin
-        image_data = URI.open(attachment.url) { |file| file.read }
-        image_io = StringIO.new(image_data)
-
-        blob = ActiveStorage::Blob.create_and_upload!(
-          io: image_io,
-          filename: attachment.filename,
-          content_type: attachment.content_type
-        )
+        blob = URI.open(attachment.url) do |file|
+          ActiveStorage::Blob.create_and_upload!(
+            io: file,
+            filename: attachment.filename,
+            content_type: attachment.content_type
+          )
+        end
 
       rescue StandardError
         blobs.each(&:purge)

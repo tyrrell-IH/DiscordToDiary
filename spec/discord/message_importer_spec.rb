@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'discordrb'
+require "stringio"
 
 RSpec.describe MessageImporter do
   let(:user) { FactoryBot.create(:user) }
@@ -26,8 +27,8 @@ RSpec.describe MessageImporter do
       attachments: [ attachment1, attachment2 ]
     )
   end
-  let(:file1) { instance_double(IO, read: "dummy1") }
-  let(:file2) { instance_double(IO, read: "dummy2") }
+  let(:file1) { StringIO.new("dummy1") }
+  let(:file2) { StringIO.new("dummy2") }
   let(:importer) { described_class.new(message) }
   let(:attachment_blob_pairs) { importer.upload_attachments }
 
