@@ -11,6 +11,7 @@ class User < ApplicationRecord
     user = User.find_or_initialize_by(discord_user_id: auth_info.uid)
     user.update!(
       discord_user_name: auth_info.info.name,
+      discord_global_name: auth_info.extra.raw_info.global_name,
       avatar_url: auth_info.info.image
     )
     user
