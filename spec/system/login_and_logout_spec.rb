@@ -6,8 +6,13 @@ RSpec.describe "Login and logout", type: :system do
       provider: "discord",
       uid: "12345",
       info: {
-        name: "test",
+        name: "user_name",
         image: "https://example.com/image.png"
+      },
+      extra: {
+        raw_info: {
+          global_name: "global_name"
+        }
       }
     )
   end
