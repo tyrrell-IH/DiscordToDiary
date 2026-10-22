@@ -1,0 +1,4 @@
+<p><%= diary.date %></p>
+<% diary.diary_entries.each do |entry| %>
+  <%= render "diaries/diary_entry", entry: entry %>
+<% end %>

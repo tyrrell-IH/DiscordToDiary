@@ -2,16 +2,6 @@
   <h1 class="font-bold text-4xl">Diaries#index</h1>
 
   <% @diaries.each do |diary| %>
-    <p><%= diary.date %></p>
-    <% diary.diary_entries.each do |entry| %>
-      <p><%= entry.content %></p>
-      <% entry.diary_attachments.each do |attachment| %>
-        <% if attachment.file.image? %>
-          <%= image_tag attachment.file %>
-        <% elsif attachment.file.video? %>
-          <%= video_tag url_for(attachment.file), controls: true %>
-        <% end %>
-      <% end %>
-    <% end %>
+    <%= render "diaries/diary", diary: diary %>
   <% end %>
 </div>

@@ -1,0 +1,8 @@
+<p><%= entry.content %></p>
+<% entry.diary_attachments.each do |attachment| %>
+  <% if attachment.file.image? %>
+    <%= image_tag attachment.file, class: "diary-entry-image" %>
+  <% elsif attachment.file.video? %>
+    <%= video_tag url_for(attachment.file), controls: true, class: "diary-entry-video" %>
+  <% end %>
+<% end %>
