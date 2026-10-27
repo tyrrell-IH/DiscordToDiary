@@ -16,4 +16,8 @@ class User < ApplicationRecord
     )
     user
   end
+
+  def display_name
+    discord_global_name || discord_user_name
+  end
 end
