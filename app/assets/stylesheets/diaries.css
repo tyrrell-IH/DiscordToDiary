@@ -1,3 +1,16 @@
+.diary-owner {
+    display:flex;
+    align-items: center;
+    padding: 20px 0px;
+}
+
+.diary-owner-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .diary-entry-image {
     max-width: 50%;
     height: auto;
