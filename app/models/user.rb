@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :diaries, dependent: :destroy
+  has_many :diaries, -> { order(date: :asc) }, dependent: :destroy
 
   enum :default_visibility, { unconfigured: 0, everyone: 1, members_only: 2, only_me: 3 }
 
@@ -15,5 +15,9 @@ class User < ApplicationRecord
       avatar_url: auth_info.info.image
     )
     user
+  end
+
+  def display_name
+    discord_global_name || discord_user_name
   end
 end

@@ -1,3 +1,7 @@
 <div>
-  <h1 class="font-bold text-4xl">Diaries#index</h1>
+  <%= render "diaries/owner", user: @user %>
+
+  <% @diaries.each do |diary| %>
+    <%= render "diaries/diary", diary: diary %>
+  <% end %>
 </div>

@@ -1,6 +1,6 @@
 class DiaryEntry < ApplicationRecord
   belongs_to :diary
-  has_many :diary_attachments, dependent: :destroy
+  has_many :diary_attachments, -> { order(:position) }, dependent: :destroy
 
   validates :posted_at, presence: true
   validates :discord_message_id, presence: true, uniqueness: true
