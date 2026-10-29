@@ -24,7 +24,7 @@ RSpec.describe Diary, type: :model do
     new_diary = FactoryBot.build(:diary, user:, date:)
 
     expect(new_diary).to be_invalid
-    expect(new_diary.errors[:date]).to include("has already been taken")
+    expect(new_diary.errors[:date]).to include("はすでに存在します")
   end
 
   it "is valid with the same date for a different user" do

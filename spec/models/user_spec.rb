@@ -31,7 +31,7 @@ RSpec.describe User, type: :model do
       new_user = FactoryBot.build(:user, discord_user_id: '123')
 
       expect(new_user).to be_invalid
-      expect(new_user.errors[:discord_user_id]).to include("has already been taken")
+      expect(new_user.errors[:discord_user_id]).to include("はすでに存在します")
     end
 
     it "is invalid without a default_visibility" do

@@ -14,7 +14,7 @@ RSpec.describe DiaryAttachment, type: :model do
     new_diary_attachment = FactoryBot.build(:diary_attachment, diary_entry:, position: 0)
 
     expect(new_diary_attachment).to be_invalid
-    expect(new_diary_attachment.errors[:position]).to include("has already been taken")
+    expect(new_diary_attachment.errors[:position]).to include("はすでに存在します")
   end
 
   it "is invalid with a negative position" do
@@ -41,6 +41,6 @@ RSpec.describe DiaryAttachment, type: :model do
     new_diary_attachment = FactoryBot.build(:diary_attachment, discord_attachment_id: "123")
 
     expect(new_diary_attachment).to be_invalid
-    expect(new_diary_attachment.errors[:discord_attachment_id]).to include("has already been taken")
+    expect(new_diary_attachment.errors[:discord_attachment_id]).to include("はすでに存在します")
   end
 end

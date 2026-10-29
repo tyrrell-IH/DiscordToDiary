@@ -1,4 +1,6 @@
-<p><%= diary.date %></p>
-<% diary.diary_entries.each do |entry| %>
-  <%= render "diaries/diary_entry", entry: entry %>
-<% end %>
+<div class="diary">
+  <h2 class="diary-date"><%= l(diary.date, format: :diary) %></h2>
+  <% diary.diary_entries.each do |entry| %>
+    <%= render "diaries/diary_entry", entry: entry %>
+  <% end %>
+</div>
