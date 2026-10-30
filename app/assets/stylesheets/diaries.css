@@ -5,6 +5,16 @@
     box-sizing: border-box;
 }
 
+.diary {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.diary + .diary {
+    margin-top: 32px;
+}
+
 .diary-owner {
     display:flex;
     align-items: center;
