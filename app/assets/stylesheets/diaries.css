@@ -28,6 +28,16 @@
     object-fit: cover;
 }
 
+.diary > h2 {
+    margin-bottom: 20px;
+}
+
+.diary-entry-content {
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+    margin: 16px 0 16px;
+}
+
 .diary-entry-image {
     max-width: 50%;
     height: auto;
