@@ -39,11 +39,17 @@
 }
 
 .diary-entry-image {
-    max-width: 50%;
+    max-width: 100%;
+    max-height: 350px;
+    width: auto;
     height: auto;
+    border-radius: 8px;
 }
 
 .diary-entry-video {
-    max-width: 50%;
+    max-width: min(100%, 500px);
+    max-height: 350px;
+    width: auto;
     height: auto;
+    border-radius: 8px;
 }
