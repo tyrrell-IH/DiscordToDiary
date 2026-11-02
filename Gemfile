@@ -74,3 +74,5 @@ gem "discordrb", "~> 3.8", require: false
 
 gem "omniauth-discord", "~> 1.2"
 gem "omniauth-rails_csrf_protection", "~> 2.0"
+
+gem "rails-i18n", "~> 8.1"

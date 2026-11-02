@@ -27,6 +27,6 @@ RSpec.describe DiaryEntry, type: :model do
     new_diary_entry = FactoryBot.build(:diary_entry, discord_message_id: "123")
 
     expect(new_diary_entry).to be_invalid
-    expect(new_diary_entry.errors[:discord_message_id]).to include("has already been taken")
+    expect(new_diary_entry.errors[:discord_message_id]).to include("はすでに存在します")
   end
 end

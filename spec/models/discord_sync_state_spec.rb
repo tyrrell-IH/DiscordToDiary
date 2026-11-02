@@ -13,14 +13,14 @@ RSpec.describe DiscordSyncState, type: :model do
     new_discord_sync_state = FactoryBot.build(:discord_sync_state)
 
     expect(new_discord_sync_state).to be_invalid
-    expect(new_discord_sync_state.errors[:singleton_key]).to include("has already been taken")
+    expect(new_discord_sync_state.errors[:singleton_key]).to include("はすでに存在します")
   end
 
   it "is invalid with an invalid singleton_key" do
     discord_sync_state = FactoryBot.build(:discord_sync_state, singleton_key: "not_allowed")
 
     expect(discord_sync_state).to be_invalid
-    expect(discord_sync_state.errors[:singleton_key]).to include("is not included in the list")
+    expect(discord_sync_state.errors[:singleton_key]).to include("は一覧にありません")
   end
 
   it "rejects an invalid singleton_key at the database level" do

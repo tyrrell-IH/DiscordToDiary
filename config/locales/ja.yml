@@ -1,0 +1,5 @@
+ja:
+  date:
+    formats:
+      diary: "%Y年%-m月%-d日(%a)"
+
