@@ -31,12 +31,27 @@ RSpec.describe "Diaries", type: :request do
     end
 
     context "when the viewer is the owner" do
+      let(:another_diary_owner) { FactoryBot.create(:user) }
+      let!(:another_owner_diary) do
+        FactoryBot.create(:diary,
+                          user: another_diary_owner,
+                          visibility: "everyone",
+                          date: Date.new(2026, 4, 4))
+      end
+
       it "shows all diaries" do
         log_in_as(diary_owner)
         get user_diaries_path(diary_owner)
         expect(response.body).to include("2026年1月1日")
         expect(response.body).to include("2026年2月2日")
         expect(response.body).to include("2026年3月3日")
+      end
+
+      it "does not show another owner's diary" do
+        log_in_as(diary_owner)
+        get user_diaries_path(diary_owner)
+
+        expect(response.body).not_to include("2026年4月4日")
       end
 
       it "shows diaries in ascending date order" do
