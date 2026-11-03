@@ -9,11 +9,11 @@ RSpec.describe "Diaries", type: :request do
   let!(:private_diary) { FactoryBot.create(:diary,
                                            user: diary_owner,
                                            visibility: "only_me",
-                                           date: Date.new(2026, 3, 3)) }
+                                           date: Date.new(2026, 1, 3)) }
   let!(:members_only_diary) { FactoryBot.create(:diary,
                                                 user: diary_owner,
                                                 visibility: "members_only",
-                                                date: Date.new(2026, 2, 2)) }
+                                                date: Date.new(2026, 1, 2)) }
 
   before do
     OmniAuth.config.test_mode = true
@@ -36,29 +36,29 @@ RSpec.describe "Diaries", type: :request do
         FactoryBot.create(:diary,
                           user: another_diary_owner,
                           visibility: "everyone",
-                          date: Date.new(2026, 4, 4))
+                          date: Date.new(2026, 1, 4))
       end
 
       it "shows all diaries" do
         log_in_as(diary_owner)
         get user_diaries_path(diary_owner)
         expect(response.body).to include("2026年1月1日")
-        expect(response.body).to include("2026年2月2日")
-        expect(response.body).to include("2026年3月3日")
+        expect(response.body).to include("2026年1月2日")
+        expect(response.body).to include("2026年1月3日")
       end
 
       it "does not show another owner's diary" do
         log_in_as(diary_owner)
         get user_diaries_path(diary_owner)
 
-        expect(response.body).not_to include("2026年4月4日")
+        expect(response.body).not_to include("2026年1月4日")
       end
 
       it "shows diaries in ascending date order" do
         log_in_as(diary_owner)
         get user_diaries_path(diary_owner)
 
-        dates = [ "2026年1月1日", "2026年2月2日", "2026年3月3日" ]
+        dates = [ "2026年1月1日", "2026年1月2日", "2026年1月3日" ]
 
         dates.each do |date|
           expect(response.body).to include(date)
@@ -77,8 +77,8 @@ RSpec.describe "Diaries", type: :request do
         log_in_as(viewer)
         get user_diaries_path(diary_owner)
         expect(response.body).to include("2026年1月1日")
-        expect(response.body).to include("2026年2月2日")
-        expect(response.body).not_to include("2026年3月3日")
+        expect(response.body).to include("2026年1月2日")
+        expect(response.body).not_to include("2026年1月3日")
       end
     end
 
@@ -86,8 +86,8 @@ RSpec.describe "Diaries", type: :request do
       it "shows only public diaries" do
         get user_diaries_path(diary_owner)
         expect(response.body).to include("2026年1月1日")
-        expect(response.body).not_to include("2026年2月2日")
-        expect(response.body).not_to include("2026年3月3日")
+        expect(response.body).not_to include("2026年1月2日")
+        expect(response.body).not_to include("2026年1月3日")
       end
     end
   end

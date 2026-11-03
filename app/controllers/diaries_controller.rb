@@ -10,6 +10,13 @@ class DiariesController < ApplicationController
         @user.diaries.where(visibility: "everyone")
       end
 
+    return if @diaries.empty?
+
+    if params[:diary_month].blank?
+      date = @diaries.maximum(:date)
+      @diaries = @diaries.where(date: date.all_month)
+    end
+
     @diaries = @diaries.includes(
       diary_entries: {
         diary_attachments: { file_attachment: :blob }
