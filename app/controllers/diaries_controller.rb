@@ -12,12 +12,13 @@ class DiariesController < ApplicationController
 
     return if @diaries.empty?
 
-    if params[:diary_month].blank?
-      date = @diaries.maximum(:date)
-      @diaries = @diaries.where(date: date.all_month)
+    date = if params[:diary_month].blank?
+      @diaries.maximum(:date)
+    else
+      Date.strptime(params[:diary_month], "%Y-%m")
     end
 
-    @diaries = @diaries.includes(
+    @diaries = @diaries.where(date: date.all_month).includes(
       diary_entries: {
         diary_attachments: { file_attachment: :blob }
       }
