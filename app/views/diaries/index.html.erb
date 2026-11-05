@@ -1,7 +1,15 @@
 <div class="diary-list">
   <%= render "diaries/owner", user: @user %>
 
-  <% @diaries.each do |diary| %>
-    <%= render "diaries/diary", diary: diary %>
+  <% if @diary_date %>
+    <h1 class="diary-month"><%= l(@diary_date, format: :month) %></h1>
+  <% end %>
+
+  <% if @diaries.empty? %>
+    <p>日記がありません。</p>
+  <% else %>
+    <% @diaries.each do |diary| %>
+      <%= render "diaries/diary", diary: diary %>
+    <% end %>
   <% end %>
 </div>
