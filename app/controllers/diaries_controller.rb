@@ -10,6 +10,12 @@ class DiariesController < ApplicationController
         @user.diaries.where(visibility: "everyone")
       end
 
+    @diary_months = @diaries.pluck(:date)
+                            .map(&:beginning_of_month)
+                            .uniq
+                            .sort
+                            .reverse
+
     @diary_date =
       if params[:diary_month].blank?
         @diaries.maximum(:date)

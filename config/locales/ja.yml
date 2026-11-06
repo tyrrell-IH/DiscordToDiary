@@ -3,4 +3,5 @@ ja:
     formats:
       diary: "%Y年%-m月%-d日(%a)"
       month: "%Y年%-m月分の日記"
+      month_select: "%Y年%-m月"
 

@@ -29,6 +29,55 @@
     object-fit: cover;
 }
 
+.diary-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.diary-month {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.diary-month-form {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.diary-month-label {
+    font-size: 0.875rem;
+}
+
+.diary-month-select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #333;
+    font: inherit;
+}
+
+.diary-month-submit {
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f5f5f5;
+    color: #333;
+    font: inherit;
+    cursor: pointer;
+}
+
+.diary-month-submit:hover {
+    background-color: #e8e8e8;
+}
+
 .diary > h2 {
     margin-bottom: 20px;
 }
