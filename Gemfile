@@ -65,7 +65,7 @@ end
 group :test do
   gem "capybara", "~> 3.40"
 
-  gem "selenium-webdriver", "~> 4.51"
+  gem "selenium-webdriver", "~> 4.52"
 end
 
 gem "ruby-vips", "~> 2.3", require: false
