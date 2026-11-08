@@ -1,0 +1,12 @@
+<div class="diary-detail">
+  <%= render "diaries/owner", user: @user %>
+
+  <div class="diary">
+    <header class="diary-header">
+      <h1 class="diary-date">
+        <%= l(@diary.date, format: :diary) %>
+      </h1>
+    </header>
+  </div>
+</div>
+

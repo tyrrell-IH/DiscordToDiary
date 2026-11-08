@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :users, only: [] do
-    resources :diaries, only: [ :index ]
+    resources :diaries, only: [ :index, :show ]
   end
 
   get "/login", to: "sessions#new", as: "login"

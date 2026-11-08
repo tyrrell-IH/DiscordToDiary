@@ -36,6 +36,11 @@ class DiariesController < ApplicationController
     render plain: "年月の指定が不正です。", status: :bad_request
   end
 
+  def show
+    @user = User.find(params[:user_id])
+    @diary = @user.diaries.find(params[:id])
+  end
+
   private
 
   def parse_diary_month(diary_month)

@@ -155,4 +155,12 @@ RSpec.describe "Diaries", type: :request do
       end
     end
   end
+
+  describe "GET /users/:user_id/diaries/:id" do
+    it "returns 200 ok response" do
+      get user_diary_path(diary_owner, public_diary)
+      expect(response).to have_http_status(:ok)
+      assert_select "h1.diary-date", text: "2026年1月1日(木)"
+    end
+  end
 end

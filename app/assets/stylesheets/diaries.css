@@ -127,3 +127,11 @@
     height: auto;
     border-radius: 8px;
 }
+
+.diary-detail {
+    width: 100%;
+    max-width: 800px;
+    margin-inline: auto;
+    padding-inline: 16px;
+    box-sizing: border-box;
+}
