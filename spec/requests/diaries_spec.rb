@@ -49,6 +49,11 @@ RSpec.describe "Diaries", type: :request do
         expect(response.body).to include("2026年1月1日")
         expect(response.body).to include("2026年1月2日")
         expect(response.body).to include("2026年1月3日")
+
+        assert_select ".diary-visibility", count: 3
+        assert_select ".diary-visibility", text: "非公開", count: 1
+        assert_select ".diary-visibility", text: "ユーザー限定公開", count: 1
+        assert_select ".diary-visibility", text: "公開", count: 1
       end
 
       it "does not show another owner's diary" do
@@ -83,6 +88,8 @@ RSpec.describe "Diaries", type: :request do
         expect(response.body).to include("2026年1月1日")
         expect(response.body).to include("2026年1月2日")
         expect(response.body).not_to include("2026年1月3日")
+
+        assert_select ".diary-visibility", count: 0
       end
     end
 
@@ -92,6 +99,8 @@ RSpec.describe "Diaries", type: :request do
         expect(response.body).to include("2026年1月1日")
         expect(response.body).not_to include("2026年1月2日")
         expect(response.body).not_to include("2026年1月3日")
+
+        assert_select ".diary-visibility", count: 0
       end
     end
 

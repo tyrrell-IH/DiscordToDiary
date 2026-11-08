@@ -5,3 +5,7 @@ ja:
       month: "%Y年%-m月分の日記"
       month_select: "%Y年%-m月"
 
+  visibility:
+    everyone: "公開"
+    members_only: "ユーザー限定公開"
+    only_me: "非公開"

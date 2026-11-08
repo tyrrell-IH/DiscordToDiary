@@ -38,6 +38,29 @@
     margin-bottom: 24px;
 }
 
+.diary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.diary-date {
+    margin: 0;
+}
+
+.diary-visibility {
+    margin: 0;
+    padding: 6px 14px;
+    border-radius: 6px;
+    background-color: #f3f3f6;
+    color: #555;
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
 .diary-month {
     margin: 0;
     font-size: 1.25rem;
