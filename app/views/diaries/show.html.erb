@@ -7,6 +7,14 @@
         <%= l(@diary.date, format: :diary) %>
       </h1>
     </header>
+
+    <div class="diary-detail-entries">
+      <% @diary.diary_entries.each do |entry| %>
+        <div class="diary-detail-entry">
+          <%= render "diaries/diary_entry", entry: entry %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
 

@@ -135,3 +135,13 @@
     padding-inline: 16px;
     box-sizing: border-box;
 }
+
+.diary-detail-entry {
+    padding-block: 16px;
+}
+
+.diary-detail-entry + .diary-detail-entry {
+    margin-top: 16px;
+    padding-top: 32px;
+    border-top: 1px solid #eee;
+}
