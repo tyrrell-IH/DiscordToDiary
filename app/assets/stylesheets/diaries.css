@@ -145,3 +145,13 @@
     padding-top: 32px;
     border-top: 1px solid #eee;
 }
+
+.diary-date-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.diary-date-link:hover {
+    color: #555;
+}
