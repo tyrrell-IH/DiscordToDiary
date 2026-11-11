@@ -138,12 +138,12 @@
 
 .diary-detail-entry {
     padding-block: 16px;
+    border-top: 1px solid #eee;
 }
 
 .diary-detail-entry + .diary-detail-entry {
     margin-top: 16px;
     padding-top: 32px;
-    border-top: 1px solid #eee;
 }
 
 .diary-date-link {
