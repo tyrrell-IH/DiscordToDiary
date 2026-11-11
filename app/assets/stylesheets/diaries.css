@@ -155,3 +155,20 @@
 .diary-date-link:hover {
     color: #555;
 }
+
+.original-link {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+
+.original-link a {
+    color: #555;
+    font-size: 0.875rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.original-link a:hover {
+    color: #111;
+}

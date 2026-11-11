@@ -11,6 +11,11 @@
     <div class="diary-detail-entries">
       <% @diary.diary_entries.each do |entry| %>
         <div class="diary-detail-entry">
+          <% if current_user %>
+            <div class="original-link">
+              <%= link_to "元の投稿", discord_message_url(entry) %>
+            </div>
+          <% end %>
           <%= render "diaries/diary_entry", entry: entry %>
         </div>
       <% end %>

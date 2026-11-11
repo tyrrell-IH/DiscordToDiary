@@ -162,5 +162,46 @@ RSpec.describe "Diaries", type: :request do
       expect(response).to have_http_status(:ok)
       assert_select "h1.diary-date", text: "2026年1月1日(木)"
     end
+
+    describe "original post links" do
+      let(:server_id) { "11111" }
+      let(:channel_id) { "22222" }
+
+      let!(:entry) do
+        FactoryBot.create(:diary_entry,
+                          diary: public_diary,
+                          discord_message_id: "33333")
+      end
+
+      before do
+        allow(Rails.application.credentials)
+          .to receive(:fetch).with(:discord)
+                             .and_return({
+                                           server_id: server_id,
+                                           channel_id: channel_id
+                                         })
+      end
+
+      context "when the viewer is logged in" do
+        it "shows the original post link with the correct URL" do
+          log_in_as(diary_owner)
+          get user_diary_path(diary_owner, public_diary)
+
+          expected_url =
+            "https://discord.com/channels/#{server_id}/#{channel_id}/#{entry.discord_message_id}"
+
+          assert_select "a[href=?]", expected_url, text: "元の投稿"
+        end
+      end
+
+      context "when the viewer is not logged in" do
+        it "does not show the original post link" do
+          get user_diary_path(diary_owner, public_diary)
+
+          expect(response).to have_http_status(:ok)
+          assert_select ".original-link a", count: 0
+        end
+      end
+    end
   end
 end
