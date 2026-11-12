@@ -172,3 +172,27 @@
 .original-link a:hover {
     color: #111;
 }
+
+.diary-back {
+    margin-block: 16px;
+}
+
+.diary-back-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: #555;
+    font-size: 0.875rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.diary-back-link:hover {
+    color: #111;
+}
+
+.diary-back-link:focus-visible {
+    outline: 2px solid #555;
+    outline-offset: 4px;
+    border-radius: 2px;
+}
