@@ -31,7 +31,11 @@ class DiariesController < ApplicationController
 
   def show
     @user = User.find(params[:user_id])
-    @diary = viewable_diaries(@user).find(params[:id])
+    @diary = viewable_diaries(@user).includes(
+      diary_entries: {
+        diary_attachments: { file_attachment: :blob }
+      }
+    ).find(params[:id])
   end
 
   private
