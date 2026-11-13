@@ -1,14 +1,7 @@
 class DiariesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
-    @diaries =
-      if @user == current_user
-        @user.diaries
-      elsif current_user
-        @user.diaries.where(visibility: %w[members_only everyone])
-      else
-        @user.diaries.where(visibility: "everyone")
-      end
+    @diaries = viewable_diaries(@user)
 
     @diary_months = @diaries.pluck(:date)
                             .map(&:beginning_of_month)
@@ -38,7 +31,7 @@ class DiariesController < ApplicationController
 
   def show
     @user = User.find(params[:user_id])
-    @diary = @user.diaries.find(params[:id])
+    @diary = viewable_diaries(@user).find(params[:id])
   end
 
   private
@@ -49,5 +42,15 @@ class DiariesController < ApplicationController
     end
 
     Date.strptime(diary_month, "%Y-%m")
+  end
+
+  def viewable_diaries(user)
+    if user == current_user
+      user.diaries
+    elsif current_user
+      user.diaries.where(visibility: %w[members_only everyone])
+    else
+      user.diaries.where(visibility: "everyone")
+    end
   end
 end

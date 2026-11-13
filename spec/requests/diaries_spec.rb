@@ -163,6 +163,74 @@ RSpec.describe "Diaries", type: :request do
       assert_select "h1.diary-date", text: "2026年1月1日(木)"
     end
 
+    context "when the viewer is the owner" do
+      it "returns 200 for a public diary" do
+        log_in_as(diary_owner)
+        get user_diary_path(diary_owner, public_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 200 for a members-only diary" do
+        log_in_as(diary_owner)
+        get user_diary_path(diary_owner, members_only_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 200 for a private diary" do
+        log_in_as(diary_owner)
+        get user_diary_path(diary_owner, private_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "when the viewer is logged in as another user" do
+      let(:viewer) { FactoryBot.create(:user) }
+
+      it "returns 200 for a public diary" do
+        log_in_as(viewer)
+        get user_diary_path(diary_owner, public_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 200 for a members-only diary" do
+        log_in_as(viewer)
+        get user_diary_path(diary_owner, members_only_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 404 for a private diary" do
+        log_in_as(viewer)
+        get user_diary_path(diary_owner, private_diary)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "when the viewer is not logged in" do
+      it "returns 200 for a public diary" do
+        get user_diary_path(diary_owner, public_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 404 for a members-only diary" do
+        get user_diary_path(diary_owner, members_only_diary)
+
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "returns 404 for a private diary" do
+        get user_diary_path(diary_owner, private_diary)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
     describe "original post links" do
       let(:server_id) { "11111" }
       let(:channel_id) { "22222" }
