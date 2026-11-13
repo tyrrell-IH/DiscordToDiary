@@ -127,3 +127,72 @@
     height: auto;
     border-radius: 8px;
 }
+
+.diary-detail {
+    width: 100%;
+    max-width: 800px;
+    margin-inline: auto;
+    padding-inline: 16px;
+    box-sizing: border-box;
+}
+
+.diary-detail-entry {
+    padding-block: 16px;
+    border-top: 1px solid #eee;
+}
+
+.diary-detail-entry + .diary-detail-entry {
+    margin-top: 16px;
+    padding-top: 32px;
+}
+
+.diary-date-link {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.diary-date-link:hover {
+    color: #555;
+}
+
+.original-link {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+
+.original-link a {
+    color: #555;
+    font-size: 0.875rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.original-link a:hover {
+    color: #111;
+}
+
+.diary-back {
+    margin-block: 16px;
+}
+
+.diary-back-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: #555;
+    font-size: 0.875rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.diary-back-link:hover {
+    color: #111;
+}
+
+.diary-back-link:focus-visible {
+    outline: 2px solid #555;
+    outline-offset: 4px;
+    border-radius: 2px;
+}

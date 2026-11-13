@@ -155,4 +155,121 @@ RSpec.describe "Diaries", type: :request do
       end
     end
   end
+
+  describe "GET /users/:user_id/diaries/:id" do
+    it "returns 200 ok response" do
+      get user_diary_path(diary_owner, public_diary)
+      expect(response).to have_http_status(:ok)
+      assert_select "h1.diary-date", text: "2026年1月1日(木)"
+    end
+
+    context "when the viewer is the owner" do
+      it "returns 200 for a public diary" do
+        log_in_as(diary_owner)
+        get user_diary_path(diary_owner, public_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 200 for a members-only diary" do
+        log_in_as(diary_owner)
+        get user_diary_path(diary_owner, members_only_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 200 for a private diary" do
+        log_in_as(diary_owner)
+        get user_diary_path(diary_owner, private_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context "when the viewer is logged in as another user" do
+      let(:viewer) { FactoryBot.create(:user) }
+
+      it "returns 200 for a public diary" do
+        log_in_as(viewer)
+        get user_diary_path(diary_owner, public_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 200 for a members-only diary" do
+        log_in_as(viewer)
+        get user_diary_path(diary_owner, members_only_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 404 for a private diary" do
+        log_in_as(viewer)
+        get user_diary_path(diary_owner, private_diary)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context "when the viewer is not logged in" do
+      it "returns 200 for a public diary" do
+        get user_diary_path(diary_owner, public_diary)
+
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 404 for a members-only diary" do
+        get user_diary_path(diary_owner, members_only_diary)
+
+        expect(response).to have_http_status(:not_found)
+      end
+
+      it "returns 404 for a private diary" do
+        get user_diary_path(diary_owner, private_diary)
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    describe "original post links" do
+      let(:server_id) { "11111" }
+      let(:channel_id) { "22222" }
+
+      let!(:entry) do
+        FactoryBot.create(:diary_entry,
+                          diary: public_diary,
+                          discord_message_id: "33333")
+      end
+
+      before do
+        allow(Rails.application.credentials)
+          .to receive(:fetch).with(:discord)
+                             .and_return({
+                                           server_id: server_id,
+                                           channel_id: channel_id
+                                         })
+      end
+
+      context "when the viewer is logged in" do
+        it "shows the original post link with the correct URL" do
+          log_in_as(diary_owner)
+          get user_diary_path(diary_owner, public_diary)
+
+          expected_url =
+            "https://discord.com/channels/#{server_id}/#{channel_id}/#{entry.discord_message_id}"
+
+          assert_select "a[href=?]", expected_url, text: "元の投稿"
+        end
+      end
+
+      context "when the viewer is not logged in" do
+        it "does not show the original post link" do
+          get user_diary_path(diary_owner, public_diary)
+
+          expect(response).to have_http_status(:ok)
+          assert_select ".original-link a", count: 0
+        end
+      end
+    end
+  end
 end

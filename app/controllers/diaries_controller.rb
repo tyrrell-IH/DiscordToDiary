@@ -1,14 +1,7 @@
 class DiariesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
-    @diaries =
-      if @user == current_user
-        @user.diaries
-      elsif current_user
-        @user.diaries.where(visibility: %w[members_only everyone])
-      else
-        @user.diaries.where(visibility: "everyone")
-      end
+    @diaries = viewable_diaries(@user)
 
     @diary_months = @diaries.pluck(:date)
                             .map(&:beginning_of_month)
@@ -36,6 +29,15 @@ class DiariesController < ApplicationController
     render plain: "年月の指定が不正です。", status: :bad_request
   end
 
+  def show
+    @user = User.find(params[:user_id])
+    @diary = viewable_diaries(@user).includes(
+      diary_entries: {
+        diary_attachments: { file_attachment: :blob }
+      }
+    ).find(params[:id])
+  end
+
   private
 
   def parse_diary_month(diary_month)
@@ -44,5 +46,15 @@ class DiariesController < ApplicationController
     end
 
     Date.strptime(diary_month, "%Y-%m")
+  end
+
+  def viewable_diaries(user)
+    if user == current_user
+      user.diaries
+    elsif current_user
+      user.diaries.where(visibility: %w[members_only everyone])
+    else
+      user.diaries.where(visibility: "everyone")
+    end
   end
 end
