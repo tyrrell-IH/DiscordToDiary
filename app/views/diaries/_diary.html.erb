@@ -2,7 +2,7 @@
   <div class="diary-header">
     <h2 class="diary-date">
       <%= link_to l(diary.date, format: :diary),
-                  user_diary_path(diary.user_id, diary),
+                  diary_path(diary),
                   class: "diary-date-link" %>
     </h2>
     <% if current_user == diary.user %>
