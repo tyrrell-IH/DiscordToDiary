@@ -8,7 +8,7 @@ RSpec.describe "Return to diary list", type: :system do
                                    date: Date.new(2026, 1, 1)) }
 
   it "returns to the diary list for the same month" do
-    visit user_diary_path(diary_owner, diary)
+    visit diary_path(diary)
 
     list_path = user_diaries_path(
       diary_owner,

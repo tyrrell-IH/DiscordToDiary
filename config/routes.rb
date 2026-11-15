@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :users, only: [] do
-    resources :diaries, only: [ :index, :show ]
+    resources :diaries, only: [ :index ]
   end
+
+  resources :diaries, only: [ :show ]
 
   get "/login", to: "sessions#new", as: "login"
   delete "/logout", to: "sessions#destroy", as: "logout"

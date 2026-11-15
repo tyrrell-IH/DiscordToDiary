@@ -15,7 +15,7 @@ RSpec.describe "Diary detail navigation", type: :system do
 
     click_link "2026年1月1日"
 
-    expect(page).to have_current_path(user_diary_path(diary_owner, diary))
+    expect(page).to have_current_path(diary_path(diary))
     expect(page).to have_css("h1.diary-date", text: "2026年1月1日")
   end
 end
