@@ -24,6 +24,11 @@
             </div>
           <% end %>
           <%= render "diaries/diary_entry", entry: entry %>
+          <% if current_user == @user %>
+            <%= link_to "編集",
+                        edit_diary_entry_path(entry),
+                        class: "diary-entry-edit-link" %>
+          <% end %>
         </div>
       <% end %>
     </div>
