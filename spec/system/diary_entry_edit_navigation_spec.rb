@@ -8,25 +8,8 @@ RSpec.describe "Diary entry edit navigation", type: :system do
                                    date: Date.new(2026, 1, 1)) }
   let!(:entry) { FactoryBot.create(:diary_entry,
                                          diary: diary) }
-  let(:auth_info) do
-    OmniAuth::AuthHash.new(
-      provider: "discord",
-      uid: diary_owner.discord_user_id,
-      info: {
-        name: diary_owner.discord_user_name,
-        image: diary_owner.avatar_url
-      },
-      extra: {
-        raw_info: {
-          global_name: diary_owner.discord_global_name
-        }
-      }
-    )
-  end
-
   before do
     OmniAuth.config.test_mode = true
-    OmniAuth.config.mock_auth[:discord] = auth_info
   end
 
   after do
@@ -35,7 +18,7 @@ RSpec.describe "Diary entry edit navigation", type: :system do
   end
 
   it "opens the entry edit page when the edit link is clicked" do
-    visit "/auth/discord/callback"
+    log_in_as(diary_owner)
     visit diary_path(diary)
 
     click_link "編集"
