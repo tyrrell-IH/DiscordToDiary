@@ -1,1 +1,16 @@
-<h1>diary_entries#edit</h1>
+<div class="diary-entry-edit">
+  <%= render "diaries/owner", user: @user %>
+  <h1 class="diary-entry-edit-title">投稿を編集</h1>
+  <%= form_with model: @entry, class: "diary-entry-edit-form" do |form| %>
+    <div class="diary-entry-edit-field">
+      <%= form.label :content, "本文" %>
+      <%= form.text_area :content,
+                         rows: 8,
+                         class: "diary-entry-edit-textarea" %>
+    </div>
+    <div class="diary-entry-edit-actions">
+      <%= form.submit "変更した内容で保存",
+                      class: "diary-entry-edit-submit" %>
+    </div>
+  <% end %>
+</div>
