@@ -17,7 +17,7 @@ RSpec.describe "DiaryEntries", type: :request do
       get edit_diary_entry_path(entry)
 
       expect(response).to have_http_status(:ok)
-      assert_select "h1", text: "diary_entries#edit"
+      assert_select "h1.diary-entry-edit-title", text: "投稿を編集"
     end
   end
 end

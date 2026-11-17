@@ -24,6 +24,6 @@ RSpec.describe "Diary entry edit navigation", type: :system do
     click_link "編集"
 
     expect(page).to have_current_path(edit_diary_entry_path(entry))
-    expect(page).to have_css("h1", text: "diary_entries#edit")
+    expect(page).to have_css("h1.diary-entry-edit-title", text: "投稿を編集")
   end
 end
