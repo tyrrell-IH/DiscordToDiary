@@ -7,9 +7,18 @@ RSpec.describe "Diary entry edit navigation", type: :system do
                                    visibility: "everyone",
                                    date: Date.new(2026, 1, 1)) }
   let!(:entry) { FactoryBot.create(:diary_entry,
-                                         diary: diary) }
+                                   diary: diary) }
+  let(:server_id) { "11111" }
+  let(:channel_id) { "22222" }
+
   before do
     OmniAuth.config.test_mode = true
+    allow(Rails.application.credentials)
+      .to receive(:fetch).with(:discord)
+                         .and_return({
+                                       server_id: server_id,
+                                       channel_id: channel_id
+                                     })
   end
 
   after do
