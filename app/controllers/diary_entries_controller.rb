@@ -1,7 +1,9 @@
 class DiaryEntriesController < ApplicationController
   def edit
     @entry = DiaryEntry.find(params[:id])
-    @user = DiaryEntry.find(params[:id]).diary.user
+    @user = @entry.diary.user
+
+    raise ActiveRecord::RecordNotFound unless current_user == @user
   end
 
   def update
