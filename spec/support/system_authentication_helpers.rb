@@ -1,4 +1,4 @@
-module AuthenticationHelpers
+module SystemAuthenticationHelpers
   def log_in_as(user)
     OmniAuth.config.mock_auth[:discord] = OmniAuth::AuthHash.new(
       provider: "discord",
@@ -14,6 +14,6 @@ module AuthenticationHelpers
       }
     )
 
-    get "/auth/discord/callback"
+    visit "/auth/discord/callback"
   end
 end

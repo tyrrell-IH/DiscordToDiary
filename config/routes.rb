@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   end
 
   resources :diaries, only: [ :show ]
+  resources :diary_entries, only: [ :edit, :update ]
 
   get "/login", to: "sessions#new", as: "login"
   delete "/logout", to: "sessions#destroy", as: "logout"
