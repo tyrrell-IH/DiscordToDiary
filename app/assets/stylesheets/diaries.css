@@ -296,3 +296,10 @@
     outline: 2px solid #555;
     outline-offset: 3px;
 }
+
+.diary-entry-empty {
+    margin-block: 16px;
+    color: #666;
+    font-size: 0.875rem;
+    line-height: 1.8;
+}

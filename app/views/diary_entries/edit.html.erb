@@ -8,6 +8,26 @@
                          rows: 8,
                          class: "diary-entry-edit-textarea" %>
     </div>
+    <% @entry.diary_attachments.each do |attachment| %>
+      <div class="diary-entry-edit-attachment">
+        <% if attachment.file.attached? %>
+          <% if attachment.file.image? %>
+            <%= image_tag attachment.file, class: "diary-entry-image" %>
+          <% elsif attachment.file.video? %>
+            <%= video_tag attachment.file,
+                          controls: true,
+                          class: "diary-entry-video" %>
+          <% end %>
+        <% end %>
+        <div class="diary-entry-edit-attachment-delete">
+          <%= check_box_tag "remove_attachment_ids[]",
+                            attachment.id,
+                            false,
+                            id: "remove_attachment_#{attachment.id}" %>
+          <%= label_tag "remove_attachment_#{attachment.id}", "削除する" %>
+        </div>
+      </div>
+    <% end %>
     <div class="diary-entry-edit-actions">
       <%= form.submit "変更した内容で保存",
                       class: "diary-entry-edit-submit" %>
