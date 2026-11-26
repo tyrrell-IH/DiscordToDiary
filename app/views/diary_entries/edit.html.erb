@@ -1,6 +1,9 @@
 <div class="diary-entry-edit">
   <%= render "diaries/owner", user: @user %>
   <h1 class="diary-entry-edit-title">投稿を編集</h1>
+  <p class="diary-entry-edit-date">
+    <%= l(@entry.diary.date, format: :diary) %>の日記
+  </p>
   <%= form_with model: @entry, class: "diary-entry-edit-form" do |form| %>
     <div class="diary-entry-edit-field">
       <%= form.label :content, "本文" %>

@@ -233,9 +233,15 @@
 }
 
 .diary-entry-edit-title {
-    margin: 16px 0 24px;
+    margin: 16px 0 8px;
     font-size: 1.25rem;
     font-weight: bold;
+}
+
+.diary-entry-edit-date {
+    margin: 0 0 24px;
+    color: #555;
+    font-size: 0.875rem;
 }
 
 .diary-entry-edit-form {
