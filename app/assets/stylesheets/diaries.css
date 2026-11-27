@@ -196,3 +196,119 @@
     outline-offset: 4px;
     border-radius: 2px;
 }
+
+.diary-entry-edit-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 44px;
+    margin-top: 16px;
+    padding: 8px 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f3f3f6;
+    color: #333;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    text-decoration: none;
+}
+
+.diary-entry-edit-link:hover {
+    background-color: #e8e8ed;
+    border-color: #aaa;
+}
+
+.diary-entry-edit-link:focus-visible {
+    outline: 2px solid #555;
+    outline-offset: 3px;
+}
+
+.diary-entry-edit {
+    width: 100%;
+    max-width: 800px;
+    margin-inline: auto;
+    padding: 0 16px 32px;
+    box-sizing: border-box;
+}
+
+.diary-entry-edit-title {
+    margin: 16px 0 8px;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.diary-entry-edit-date {
+    margin: 0 0 24px;
+    color: #555;
+    font-size: 0.875rem;
+}
+
+.diary-entry-edit-form {
+    display: grid;
+    gap: 24px;
+}
+
+.diary-entry-edit-field {
+    display: grid;
+    gap: 8px;
+}
+
+.diary-entry-edit-field label {
+    color: #555;
+    font-size: 0.875rem;
+}
+
+.diary-entry-edit-textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 220px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    font: inherit;
+    line-height: 1.8;
+    resize: vertical;
+}
+
+.diary-entry-edit-textarea:focus-visible {
+    outline: 2px solid #555;
+    outline-offset: 3px;
+}
+
+.diary-entry-edit-submit {
+    min-height: 44px;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f3f3f6;
+    color: #333;
+    font: inherit;
+    cursor: pointer;
+}
+
+.diary-entry-edit-submit:hover {
+    background-color: #e8e8ed;
+}
+
+.diary-entry-edit-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.diary-entry-edit-submit:focus-visible {
+    outline: 2px solid #555;
+    outline-offset: 3px;
+}
+
+.diary-entry-empty {
+    margin-block: 16px;
+    color: #666;
+    font-size: 0.875rem;
+    line-height: 1.8;
+}

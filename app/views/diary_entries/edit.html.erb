@@ -1,0 +1,42 @@
+<div class="diary-entry-edit">
+  <%= render "diaries/owner", user: @user %>
+  <h1 class="diary-entry-edit-title">投稿を編集</h1>
+  <p class="diary-entry-edit-date">
+    <%= l(@entry.diary.date, format: :diary) %>の日記
+  </p>
+  <%= form_with model: @entry, class: "diary-entry-edit-form" do |form| %>
+    <div class="diary-entry-edit-field">
+      <%= form.label :content, "本文" %>
+      <%= form.text_area :content,
+                         rows: 8,
+                         class: "diary-entry-edit-textarea" %>
+    </div>
+    <% @entry.diary_attachments.each do |attachment| %>
+      <div class="diary-entry-edit-attachment">
+        <% if attachment.file.attached? %>
+          <% if attachment.file.image? %>
+            <%= image_tag attachment.file, class: "diary-entry-image" %>
+          <% elsif attachment.file.video? %>
+            <%= video_tag attachment.file,
+                          controls: true,
+                          class: "diary-entry-video" %>
+          <% end %>
+        <% end %>
+        <div class="diary-entry-edit-attachment-delete">
+          <%= check_box_tag "remove_attachment_ids[]",
+                            attachment.id,
+                            false,
+                            id: "remove_attachment_#{attachment.id}" %>
+          <%= label_tag "remove_attachment_#{attachment.id}", "削除する" %>
+        </div>
+      </div>
+    <% end %>
+    <div class="diary-entry-edit-actions">
+      <%= link_to "日記詳細へ戻る",
+                  diary_path(@entry.diary),
+                  class: "diary-back-link" %>
+      <%= form.submit "変更した内容で保存",
+                      class: "diary-entry-edit-submit" %>
+    </div>
+  <% end %>
+</div>

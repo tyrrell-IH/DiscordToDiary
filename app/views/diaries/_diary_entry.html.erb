@@ -1,10 +1,14 @@
 <div class="diary-entry">
-  <p class="diary-entry-content"><%= entry.content %></p>
-  <% entry.diary_attachments.each do |attachment| %>
-    <% if attachment.file.image? %>
-      <%= image_tag attachment.file, class: "diary-entry-image" %>
-    <% elsif attachment.file.video? %>
-      <%= video_tag url_for(attachment.file), controls: true, class: "diary-entry-video" %>
+  <% if entry.content.blank? && entry.diary_attachments.empty? %>
+    <p class="diary-entry-empty">本文・添付ファイルはありません。</p>
+  <% else %>
+    <p class="diary-entry-content"><%= entry.content %></p>
+    <% entry.diary_attachments.each do |attachment| %>
+      <% if attachment.file.image? %>
+        <%= image_tag attachment.file, class: "diary-entry-image" %>
+      <% elsif attachment.file.video? %>
+        <%= video_tag url_for(attachment.file), controls: true, class: "diary-entry-video" %>
+      <% end %>
     <% end %>
   <% end %>
 </div>
